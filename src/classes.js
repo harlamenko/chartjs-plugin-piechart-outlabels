@@ -273,7 +273,7 @@ export default {
         }
 
         if (!valid) {
-          this.center = positioners.moveFromAnchor(this.center, 10);
+          this.center = positioners.moveFromAnchor(this.center, 1);
         }
       }
     };
