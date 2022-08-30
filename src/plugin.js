@@ -49,7 +49,7 @@ export default {
 
       outlabelPlugin.update(el, elements, index);
       const x = outlabelPlugin.labelRect.x + (!outlabelPlugin.labelRect.isLeft ? 0 : outlabelPlugin.labelRect.width);
-      const y = outlabelPlugin.labelRect.y + (outlabelPlugin.labelRect.isTop ? -outlabelPlugin.labelRect.height : 0);
+      const y = outlabelPlugin.labelRect.y + (outlabelPlugin.labelRect.isTop ? 0 : outlabelPlugin.labelRect.height);
       if (x < rect.x1) {
         rect.x1 = x;
       }
@@ -63,21 +63,17 @@ export default {
         rect.y2 = y;
       }
     });
-    const maxXDiff = Math.max(...[
+
+    var max = chart.options.maxZoomOutPercentage || customDefaults.maxZoomOutPercentage;
+    const t = [
       chart.chartArea.left - rect.x1,
-      rect.x2 - (chart.chartArea.width - chart.chartArea.left),
-    ]);
-    const diffX = maxXDiff > 0 ? maxXDiff : 0;
-    const maxYDiff = Math.max(...[
       chart.chartArea.top - rect.y1,
-      rect.y2 - (chart.chartArea.height - chart.chartArea.top),
-    ]);
-    const diffY = maxYDiff > 0 ? maxYDiff : 0;
-    const diff = Math.max(diffX, diffY) * 2;
-
-    var max = chart.options.zoomOutPercentage || customDefaults.zoomOutPercentage;
-
-    ctrl.outerRadius -= Math.min(diff, max);
+      rect.x2 - chart.chartArea.right,
+      rect.y2 - chart.chartArea.bottom
+    ];
+    const diff = Math.max(...t.filter(x => x > 0));
+    const percent = diff * 100 / ctrl.outerRadius;
+    ctrl.outerRadius -= percent < max ? diff : max * 100 / ctrl.outerRadius;
     ctrl.innerRadius = ctrl.outerRadius / 2;
 
     ctrl.updateElements(meta.data, 0, meta.data.length, 'resize');

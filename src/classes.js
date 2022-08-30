@@ -96,8 +96,8 @@ export default {
 
     /* COMPUTING RECTS PART */
     this.computeLabelRect = function() {
-      var width = this.textRect.width + 2 * this.style.borderWidth + this.style.padding.left * 2;
-      var height = this.textRect.height + 2 * this.style.borderWidth;
+      var width = this.textRect.width + 2 * this.style.borderWidth + this.style.padding.left + this.style.padding.right;
+      var height = this.textRect.height + 2 * this.style.borderWidth + this.style.padding.top + this.style.padding.bottom;
 
       var x = this.textRect.x - this.style.borderWidth;
       var y = this.textRect.y - this.style.borderWidth;

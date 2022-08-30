@@ -128,7 +128,7 @@ export default {
 	 * @member {Number|Array|Function|undefined}
 	 * @default 30
 	 */
-  stretch: 10,
+  stretch: 12,
 
   /**
 	 * The length of the horizontal part of line between label and chart arc.
@@ -145,11 +145,11 @@ export default {
   text: '%l %p',
 
   /**
-	 * The level of zoom (out) for pie/doughnut chart in percent.
+	 * The max level of zoom (out) for pie/doughnut chart in percent.
 	 * @member {Number}
-	 * @default 10 (%)
+	 * @default 50 (%)
 	 */
-  zoomOutPercentage: 30,
+  maxZoomOutPercentage: 50,
 
   /**
 	 * The count of numbers after the point separator for float values of percent property
