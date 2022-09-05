@@ -18,7 +18,6 @@ export default {
     var value = context.dataset.data[index];
     var label = context.labels[index];
     var text = resolve([config.text, customDefaults.text], context, index);
-
     /* Replace label marker */
     text = text.replace(/%l/gi, label);
 
@@ -45,12 +44,7 @@ export default {
     });
 
     // Count lines
-    var lines = text.match(/[^\r\n]+/g);
-
-    // If no lines => nothng to display
-    if (!lines || !lines.length) {
-      throw new Error('No text to show.');
-    }
+    var lines = text.match(/[^\r\n]+/g) || [];
 
     // Remove unnecessary spaces
     for (var i = 0; i < lines.length; ++i) {
@@ -204,6 +198,9 @@ export default {
     };
 
     this.drawLine = function() {
+      if (!this.lines.length) {
+        return;
+      }
       this.ctx.save();
 
       this.ctx.strokeStyle = this.style.lineColor;
