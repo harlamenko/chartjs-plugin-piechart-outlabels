@@ -122,6 +122,10 @@ export default {
         x: 0,
         y: 0,
       };
+
+      this.customTextDrawer = config.customTextDrawer;
+      this.customLabelDrawer = config.customLabelDrawer;
+      this.customLineDrawer = config.customLineDrawer;
     };
 
     this.init(text, lines);
@@ -171,6 +175,11 @@ export default {
     /* ======================= DRAWING ======================= */
     // Draw label text
     this.drawText = function(ctx) {
+      if (this.customTextDrawer) {
+        this.customTextDrawer(ctx);
+        return;
+      }
+
       var align = this.style.textAlign;
       var font = this.style.font;
       var lh = font.lineHeight;
@@ -209,6 +218,11 @@ export default {
 
     // Draw label box
     this.drawLabel = function(ctx) {
+      if (this.customLabelDrawer) {
+        this.customLabelDrawer(ctx);
+        return;
+      }
+
       ctx.beginPath();
 
       ctx.roundRect(
@@ -245,6 +259,12 @@ export default {
     };
 
     this.drawLine = function(ctx) {
+      if (this.customLineDrawer) {
+        this.customLineDrawer(ctx);
+        return;
+      }
+
+
       if (!this.lines.length) {
         return;
       }

@@ -37,6 +37,9 @@ Available options:
 | `padding.bottom` | `Number` | - | - | `4`
 | `padding.left` | `Number` | - | - | `4`
 | [`textAlign`](formatting.md#text-alignment) | `String` | Yes | Yes | `left`
+| [`customTextDrawer`](drawing.md#draw-text) | `Function` | - | - | `null`
+| [`customLabelDrawer`](drawing.md#draw-label) | `Function` | - | - | `null`
+| [`customLineDrawer`](drawing.md#draw-line) | `Function` | - | - | `null`
 
 ## Scriptable Options
 
