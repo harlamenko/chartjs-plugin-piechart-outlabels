@@ -4,3 +4,4 @@
 bower.json
 /.vscode
 dist
+yarn-error.log
