@@ -95,6 +95,10 @@ function updateLabels(elements) {
 }
 
 function fitChartArea(chart) {
+  if (!chart._metasets[0]) {
+    return false;
+  }
+
   const ctrl = chart._metasets[0].controller;
   const meta = ctrl.getMeta();
   const elements = meta.data || [];
@@ -119,6 +123,10 @@ export default {
     getState(chart).sizeChanged = true;
   },
   afterUpdate: (chart) => {
+    if (!chart._metasets[0]) {
+      return;
+    }
+
     const ctrl = chart._metasets[0].controller;
     const meta = ctrl.getMeta();
     const elements = meta.data || [];
