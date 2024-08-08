@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
-import { toPadding, resolve } from "chart.js/helpers";
-import positioners from "./positioners.js";
-import { textSize, parseFont } from "./custom-helpers";
-import customDefaults from "./custom-defaults.js";
+import {toPadding, resolve} from 'chart.js/helpers';
+import positioners from './positioners.js';
+import {textSize, parseFont} from './custom-helpers';
+import customDefaults from './custom-defaults.js';
 
 var PLUGIN_KEY = customDefaults.PLUGIN_KEY;
 
@@ -17,10 +17,10 @@ function collides(rect, otherRect) {
 }
 
 export default {
-  OutLabel: function (chart, index, ctx, config, context) {
+  OutLabel: function(chart, index, ctx, config, context) {
     // Check whether the label should be displayed
     if (!resolve([config.display, true], context, index)) {
-      throw new Error("Label display property is set to false.");
+      throw new Error('Label display property is set to false.');
     }
 
     // Init text
@@ -32,30 +32,30 @@ export default {
 
     /* Replace value marker with possible precision value */
     (text.match(/%v\.?(\d*)/gi) || [])
-      .map(function (val) {
-        var prec = val.replace(/%v\./gi, "");
+      .map(function(val) {
+        var prec = val.replace(/%v\./gi, '');
         if (prec.length) {
           return +prec;
         }
         return config.valuePrecision || customDefaults.valuePrecision;
       })
-      .forEach(function (val) {
+      .forEach(function(val) {
         text = text.replace(/%v\.?(\d*)/i, value.toFixed(val));
       });
 
     /* Replace percent marker with possible precision value */
     (text.match(/%p\.?(\d*)/gi) || [])
-      .map(function (val) {
-        var prec = val.replace(/%p\./gi, "");
+      .map(function(val) {
+        var prec = val.replace(/%p\./gi, '');
         if (prec.length) {
           return +prec;
         }
         return config.percentPrecision || customDefaults.percentPrecision;
       })
-      .forEach(function (val) {
+      .forEach(function(val) {
         text = text.replace(
           /%p\.?(\d*)/i,
-          (context.percent * 100).toFixed(val) + "%"
+          (context.percent * 100).toFixed(val) + '%'
         );
       });
 
@@ -68,7 +68,7 @@ export default {
     }
 
     /* ===================== CONSTRUCTOR ==================== */
-    this.init = function (text, lines) {
+    this.init = function(text, lines) {
       // If everything ok -> begin initializing
       this.encodedText = config.text;
       this.text = text;
@@ -79,12 +79,12 @@ export default {
       // Init style
       this.style = {
         backgroundColor: resolve(
-          [config.backgroundColor, customDefaults.backgroundColor, "black"],
+          [config.backgroundColor, customDefaults.backgroundColor, 'black'],
           context,
           index
         ),
         borderColor: resolve(
-          [config.borderColor, customDefaults.borderColor, "black"],
+          [config.borderColor, customDefaults.borderColor, 'black'],
           context,
           index
         ),
@@ -92,17 +92,17 @@ export default {
         borderWidth: resolve([config.borderWidth, 0], context, index),
         lineWidth: resolve([config.lineWidth, 2], context, index),
         lineColor: resolve(
-          [config.lineColor, customDefaults.lineColor, "black"],
+          [config.lineColor, customDefaults.lineColor, 'black'],
           context,
           index
         ),
-        color: resolve([config.color, "white"], context, index),
+        color: resolve([config.color, 'white'], context, index),
         font: parseFont(
-          resolve([config.font, { resizable: true }]),
+          resolve([config.font, {resizable: true}]),
           ctx.canvas.style.height.slice(0, -2)
         ),
         padding: toPadding(resolve([config.padding, 0], context, index)),
-        textAlign: resolve([config.textAlign, "left"], context, index),
+        textAlign: resolve([config.textAlign, 'left'], context, index),
       };
 
       this.stretch = resolve(
@@ -127,7 +127,7 @@ export default {
     this.init(text, lines);
 
     /* COMPUTING RECTS PART */
-    this.computeLabelRect = function () {
+    this.computeLabelRect = function() {
       var width =
         this.textRect.width +
         2 * this.style.borderWidth +
@@ -152,7 +152,7 @@ export default {
       };
     };
 
-    this.computeTextRect = function () {
+    this.computeTextRect = function() {
       const isLeft = this.center.x - this.center.anchor.x < 0;
       const isTop = this.center.y - this.center.anchor.y < 0;
       const shift = isLeft
@@ -170,7 +170,7 @@ export default {
 
     /* ======================= DRAWING ======================= */
     // Draw label text
-    this.drawText = function (ctx) {
+    this.drawText = function(ctx) {
       var align = this.style.textAlign;
       var font = this.style.font;
       var lh = font.lineHeight;
@@ -185,16 +185,16 @@ export default {
       x = this.textRect.x;
       y = this.textRect.y + lh / 2;
 
-      if (align === "center") {
+      if (align === 'center') {
         x += this.textRect.width / 2;
-      } else if (align === "end" || align === "right") {
+      } else if (align === 'end' || align === 'right') {
         x += this.textRect.width;
       }
 
       ctx.font = this.style.font.string;
       ctx.fillStyle = color;
       ctx.textAlign = align;
-      ctx.textBaseline = "middle";
+      ctx.textBaseline = 'middle';
 
       for (idx = 0; idx < ilen; ++idx) {
         ctx.fillText(
@@ -208,7 +208,7 @@ export default {
     };
 
     // Draw label box
-    this.drawLabel = function (ctx) {
+    this.drawLabel = function(ctx) {
       ctx.beginPath();
 
       console.log(this.labelRect);
@@ -225,30 +225,30 @@ export default {
       console.log(this.style.backgroundColor);
 
       if (this.style.backgroundColor) {
-        ctx.fillStyle = this.style.backgroundColor || "transparent";
+        ctx.fillStyle = this.style.backgroundColor || 'transparent';
         ctx.fill();
       }
 
       if (this.style.borderColor && this.style.borderWidth) {
         ctx.strokeStyle = this.style.borderColor;
         ctx.lineWidth = this.style.borderWidth;
-        ctx.lineJoin = "miter";
+        ctx.lineJoin = 'miter';
         ctx.stroke();
       }
     };
 
-    this.ccw = function (A, B, C) {
+    this.ccw = function(A, B, C) {
       return (C.y - A.y) * (B.x - A.x) > (B.y - A.y) * (C.x - A.x);
     };
 
-    this.intersects = function (A, B, C, D) {
+    this.intersects = function(A, B, C, D) {
       return (
         this.ccw(A, C, D) !== this.ccw(B, C, D) &&
         this.ccw(A, B, C) !== this.ccw(A, B, D)
       );
     };
 
-    this.drawLine = function (ctx) {
+    this.drawLine = function(ctx) {
       if (!this.lines.length) {
         return;
       }
@@ -256,7 +256,7 @@ export default {
 
       ctx.strokeStyle = this.style.lineColor;
       ctx.lineWidth = this.style.lineWidth;
-      ctx.lineJoin = "miter";
+      ctx.lineJoin = 'miter';
       ctx.beginPath();
       ctx.moveTo(this.center.anchor.x, this.center.anchor.y);
       ctx.lineTo(this.center.copy.x, this.center.copy.y);
@@ -285,7 +285,7 @@ export default {
       ctx.restore();
     };
 
-    this.draw = function (ctx) {
+    this.draw = function(ctx) {
       if (chart.getDataVisibility(index)) {
         this.drawLabel(ctx);
         this.drawText(ctx);
@@ -294,7 +294,7 @@ export default {
     };
 
     // eslint-disable-next-line max-statements
-    this.update = function (view, elements, max) {
+    this.update = function(view, elements, max) {
       this.center = positioners.center(view, this.stretch);
 
       let valid = false;
