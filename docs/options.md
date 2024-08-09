@@ -20,6 +20,7 @@ Available options:
 | `lineColor` | `String` | Yes | Yes | `Same as pie arc color (adaptive)`
 | `lineWidth` | `Number` | Yes | Yes | `2`
 | `stretch` | `Number` | Yes | Yes | `40`
+| `stretchOffset` | `Number` | Yes | Yes | `0`
 | `color` | [`Style`](#style-options) | Yes | Yes | `white`
 | [`display`](positioning.md#visibility) | `Boolean` | Yes | Yes | `true`
 | `font` | `Object` | Yes | Yes | -

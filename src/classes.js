@@ -110,6 +110,11 @@ export default {
         context,
         index
       );
+      this.stretchOffset = resolve(
+        [config.stretchOffset, 0],
+        context,
+        index
+      );
       this.horizontalStrechPad = resolve(
         [config.horizontalStrechPad, customDefaults.horizontalStrechPad],
         context,
@@ -310,7 +315,7 @@ export default {
 
     // eslint-disable-next-line max-statements
     this.update = function(view, elements, max) {
-      this.center = positioners.center(view, this.stretch);
+      this.center = positioners.center(view, this.stretch, this.stretchOffset);
 
       let valid = false;
       let steps = 30;
