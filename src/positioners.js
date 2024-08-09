@@ -31,7 +31,7 @@ export default {
     var angle = center.angle;
 
     if (positioningStrategy === 'shift') {
-      angle += (0.05);
+      angle += 0.05;
     }
 
     var cosA = Math.cos(angle);

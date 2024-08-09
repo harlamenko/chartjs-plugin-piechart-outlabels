@@ -350,33 +350,6 @@ export default {
 
         steps--;
       }
-
-      // check textRect collides with chart
-      if (this.positioningStrategy === 'shift') {
-        valid = false;
-        steps = 5;
-
-        const chartRect = {
-          x: this.center.arc.x - this.center.arc.outerRadius,
-          y: this.center.arc.y - this.center.arc.outerRadius,
-          width: this.center.arc.outerRadius * 2,
-          height: this.center.arc.outerRadius * 2
-        };
-
-        while (!valid && steps > 0) {
-          this.textRect = this.computeTextRect();
-          this.labelRect = this.computeLabelRect();
-
-          valid = true;
-
-          if (collides(this.textRect, chartRect)) {
-            valid = false;
-            this.center = positioners.moveFromAnchor(this.center, this.positioningStrategy, 2);
-          }
-
-          steps--;
-        }
-      }
     };
   },
 };
