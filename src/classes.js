@@ -115,11 +115,17 @@ export default {
         context,
         index
       );
+      this.positioningStrategy = resolve(
+        [config.positioningStrategy, 'default'],
+        context,
+        index
+      );
       this.horizontalStrechPad = resolve(
         [config.horizontalStrechPad, customDefaults.horizontalStrechPad],
         context,
         index
       );
+      // size of current label
       this.size = textSize(ctx, this.lines, this.style.font);
 
       this.offset = {
@@ -166,6 +172,7 @@ export default {
       const shift = isLeft
         ? -(this.horizontalStrechPad + this.size.width)
         : this.horizontalStrechPad;
+
       return {
         x: this.center.x - this.style.padding.left + shift,
         y: this.center.y - this.size.height / 2,
@@ -314,7 +321,7 @@ export default {
     };
 
     // eslint-disable-next-line max-statements
-    this.update = function(view, elements, max) {
+    this.update = function(view, elements, max, chart) {
       this.center = positioners.center(view, this.stretch, this.stretchOffset);
 
       let valid = false;
@@ -328,21 +335,47 @@ export default {
 
         for (var e = 0; e < max; ++e) {
           var element = elements[e][PLUGIN_KEY];
+
           if (!element || !chart.getDataVisibility(index)) {
             continue;
           }
 
           if (collides(this.labelRect, element.labelRect)) {
             valid = false;
+            var dist = this.positioningStrategy === 'shift' ? 0 : 5;
+            this.center = positioners.moveFromAnchor(this.center, this.positioningStrategy, dist);
             break;
           }
         }
 
-        if (!valid) {
-          this.center = positioners.moveFromAnchor(this.center, 5);
-        }
-
         steps--;
+      }
+
+      // check textRect collides with chart
+      if (this.positioningStrategy === 'shift') {
+        valid = false;
+        steps = 5;
+
+        const chartRect = {
+          x: this.center.arc.x - this.center.arc.outerRadius,
+          y: this.center.arc.y - this.center.arc.outerRadius,
+          width: this.center.arc.outerRadius * 2,
+          height: this.center.arc.outerRadius * 2
+        };
+
+        while (!valid && steps > 0) {
+          this.textRect = this.computeTextRect();
+          this.labelRect = this.computeLabelRect();
+
+          valid = true;
+
+          if (collides(this.textRect, chartRect)) {
+            valid = false;
+            this.center = positioners.moveFromAnchor(this.center, this.positioningStrategy, 2);
+          }
+
+          steps--;
+        }
       }
     };
   },

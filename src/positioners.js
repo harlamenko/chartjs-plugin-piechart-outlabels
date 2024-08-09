@@ -20,18 +20,26 @@ export default {
       copy: {
         x: arc.x + cosA * stretchedD,
         y: arc.y + sinA * stretchedD
-      }
+      },
+      angle: angle
     };
   },
 
-  moveFromAnchor: function(center, dist) {
+  moveFromAnchor: function(center, positioningStrategy, dist) {
     var arc = center.arc;
     var d = center.d;
-    var angle = (arc.startAngle + arc.endAngle) / 2;
+    var angle = center.angle;
+
+    if (positioningStrategy === 'shift') {
+      angle += (0.05);
+    }
+
     var cosA = Math.cos(angle);
     var sinA = Math.sin(angle);
 
-    d += dist;
+    if (dist) {
+      d += dist;
+    }
 
     return {
       x: arc.x + cosA * d,
@@ -42,7 +50,8 @@ export default {
       copy: {
         x: arc.x + cosA * d,
         y: arc.y + sinA * d
-      }
+      },
+      angle: angle
     };
   }
 };

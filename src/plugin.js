@@ -82,7 +82,7 @@ function getResizeZoomPercentage(boundingBoxToResize, boundingBoxToFitWithin) {
  * Updates the labels of the given elements.
  * @param {*} elements
  */
-function updateLabels(elements) {
+function updateLabels(elements, chart) {
   for (let i = 0, l = elements.length; i < l; i++) {
     const element = elements[i];
     const outlabel = element[PLUGIN_KEY];
@@ -90,7 +90,7 @@ function updateLabels(elements) {
       continue;
     }
 
-    outlabel.update(element, elements, i);
+    outlabel.update(element, elements, i, chart);
   }
 }
 
@@ -141,7 +141,9 @@ export default {
     getState(chart).fitting = true;
 
     while (!fit && maxSteps-- > 0) {
-      updateLabels(elements);
+      
+      updateLabels(elements, chart);
+      
       fit = !fitChartArea(chart);
     }
 
@@ -198,6 +200,7 @@ export default {
     var elements = args.meta.data || [];
     var ctx = chart.ctx;
 
+    
     if (getState(chart).fitting) {
       return;
     }
@@ -207,7 +210,7 @@ export default {
       if (!outlabelPlugin) {
         return;
       }
-      outlabelPlugin.update(el, elements, index);
+      outlabelPlugin.update(el, elements, index, chart);
       outlabelPlugin.draw(ctx);
     });
   },
