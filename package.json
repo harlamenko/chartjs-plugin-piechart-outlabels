@@ -16,7 +16,8 @@
   "scripts": {
     "build": "rollup -c",
     "build:dev": "rollup -c --watch",
-    "lint": "eslint . --ext .js,.ts --cache"
+    "lint": "eslint . --ext .js,.ts --cache",
+    "lint:fix": "eslint . --ext .js,.ts --cache --fix"
   },
   "resolutions": {
     "graceful-fs": "^4.2.9"
