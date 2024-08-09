@@ -117,7 +117,6 @@ export default {
       );
       this.size = textSize(ctx, this.lines, this.style.font);
 
-      this.offsetStep = this.size.width / 20;
       this.offset = {
         x: 0,
         y: 0,
