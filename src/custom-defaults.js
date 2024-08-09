@@ -107,7 +107,7 @@ export default {
 	 * @prop {Number} padding.right - Space on the right of the text.
 	 * @prop {Number} padding.bottom - Space below the text.
 	 * @prop {Number} padding.left - Space on the left of the text.
-	 * @default 4 (all values)
+	 * @default 2 (all values)
 	 */
   padding: {
     top: 2,
