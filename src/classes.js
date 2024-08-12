@@ -24,7 +24,8 @@ export default {
     }
 
     // Init text
-    var value = context.dataset.data[index];
+    var value = chart._metasets[0]._parsed[index];
+    // TODO: add custom labelPath
     var label = context.labels[index];
     var text = resolve([config.text, customDefaults.text], context, index);
     /* Replace label marker */

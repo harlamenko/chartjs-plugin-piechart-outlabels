@@ -141,9 +141,7 @@ export default {
     getState(chart).fitting = true;
 
     while (!fit && maxSteps-- > 0) {
-      
       updateLabels(elements, chart);
-      
       fit = !fitChartArea(chart);
     }
 
@@ -162,7 +160,7 @@ export default {
     for (i = 0; i < elements.length; ++i) {
       el = elements[i];
       label = el[PLUGIN_KEY];
-      percent = dataset.data[i] / args.meta.total;
+      percent = chart._metasets[0]._parsed[i] / args.meta.total;
       newLabel = null;
 
       if (display && el && !el.hidden) {
@@ -200,7 +198,6 @@ export default {
     var elements = args.meta.data || [];
     var ctx = chart.ctx;
 
-    
     if (getState(chart).fitting) {
       return;
     }
