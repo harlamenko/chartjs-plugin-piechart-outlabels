@@ -25,7 +25,6 @@ export default {
 
     // Init text
     var value = chart._metasets[0]._parsed[index];
-    // TODO: add custom labelPath
     var label = context.labels[index];
     var text = resolve([config.text, customDefaults.text], context, index);
     /* Replace label marker */
@@ -34,9 +33,13 @@ export default {
     /* Replace value marker with possible precision value */
     (text.match(/%v\.?(\d*)/gi) || [])
       .map(function(val) {
-        var prec = val.replace(/%v\./gi, '');
-        if (prec.length) {
-          return +prec;
+        // check if there is precision in placeholder
+        if ((/%v\.\d+/gi).test(val)) {
+          var prec = val.replace(/%v\./gi, '');
+
+          if (prec.length) {
+            return +prec;
+          }
         }
         return config.valuePrecision || customDefaults.valuePrecision;
       })
@@ -47,10 +50,15 @@ export default {
     /* Replace percent marker with possible precision value */
     (text.match(/%p\.?(\d*)/gi) || [])
       .map(function(val) {
-        var prec = val.replace(/%p\./gi, '');
-        if (prec.length) {
-          return +prec;
+        // check if there is precision in placeholder
+        if ((/%p\.\d+/gi).test(val)) {
+          var prec = val.replace(/%p\./gi, '');
+
+          if (prec.length) {
+            return +prec;
+          }
         }
+
         return config.percentPrecision || customDefaults.percentPrecision;
       })
       .forEach(function(val) {
